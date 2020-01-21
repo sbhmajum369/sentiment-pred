@@ -44,7 +44,6 @@ def LSTM_model1():
   model1 = Sequential()
   model1.add(Embedding(input_dim=vocab_size, output_dim=512))
   model1.add(LSTM(256, activation='tanh', kernel_initializer='he_uniform'))
-  #model1.add(Dense(50, activation='relu', kernel_initializer='he_uniform'))
   model1.add(Dense(20, activation='relu', kernel_initializer='he_uniform'))
   model1.add(Dense(5, activation='softmax'))
   model1.compile(loss="categorical_crossentropy",optimizer='adam',metrics=['accuracy'])
@@ -60,15 +59,34 @@ def bilstm_model():
   return model2
 
 # Training
-X_train = X[:40000, :]
-X_val = X[40000:60000, :]
-X_test=X[60000:70000, :]
-Y_train= Y[:40000, :]
-Y_val= Y[40000:60000, :]
-Y_test= Y[60000:70000, :]
+X_train = X[:60000, :]
+X_val = X[60000:80000, :]
+X_test=X[80000:100000, :]
+Y_train= Y[:60000, :]
+Y_val= Y[60000:80000, :]
+Y_test= Y[80000:100000, :]
 
-model=LSTM_model1()
+#model=LSTM_model1()
 model=bilstm_model()
-history=model.fit(X_train, Y_train, validation_data=(X_val, Y_val), batch_size=40, epochs=2, verbose=2)
+history=model.fit(X_train, Y_train, validation_data=(X_val, Y_val), batch_size=50, epochs=6, verbose=2)
 loss, accuracy=model.evaluate(X_test, Y_test, batch_size=50)
+
+# Result Visualization
+def summarize_diagnostics(history):
+	# plot loss
+	# plt.subplot(1,2,1)
+	plt.title('Cross Entropy Loss')
+	plt.plot(history.history['loss'], color='blue', label='train')
+	plt.plot(history.history['val_loss'], color='orange', label='test')
+	plt.show()
+	# plot accuracy
+	# plt.subplot(1,2,2)
+	plt.title('Classification Accuracy')
+	plt.plot(history.history['acc'], color='blue', label='train')
+	plt.plot(history.history['val_acc'], color='orange', label='test')
+	plt.show()
+
+summarize_diagnostics(history)
+print("Test Accuracy:",accuracy*100,"%")
+print("Test Loss:",loss)
 

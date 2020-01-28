@@ -1,6 +1,6 @@
 # Reviews to Rating prediction
 
-First download the 'review.json' file from: . Then extract the 'text' and 'stars' in 2 separate .txt files: "Reviews.txt" and "Ratings.txt".
+First download the json file from: https://www.yelp.com/dataset/download. Then from 'review.json' extract the 'text' and 'stars' in 2 separate .txt files: "Reviews.txt" and "Ratings.txt".
 
 Install all the dependencies.
 

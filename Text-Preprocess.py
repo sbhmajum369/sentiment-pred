@@ -16,12 +16,13 @@ with open('Reviews.txt','r') as file:
 		temp = value.split('\n')
 		x.append(temp[0])
 
-print(x[1])
+# print(x[1])
 
 q=len(x)
 print(q)
 result=[]
 
+# Removing stopwords and character symbols
 for i in range(0,q):
 	inp=re.sub(r'[\?\$\!\(\|\)\[\]\;\%\@\#\*\,\.]','',x[i])
 	inp=inp.lower()
@@ -36,8 +37,9 @@ for i in range(0,q):
 	result.append("\n")
 
 
-print(result[0],result[1],result[2])
+# print(result[0],result[1],result[2])
 
+# Saving the processed reviews as a file 
 appendFile = open('filteredtext.txt','a')
 for w in result:
   appendFile.write(w)

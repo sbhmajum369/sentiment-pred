@@ -1,11 +1,10 @@
 
-
 from tensorflow.keras.preprocessing.text import Tokenizer
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.preprocessing import OneHotEncoder
-from Models import LSTM_model1, bilstm_model, CNN_model, FFN, new_GRU
+from Models import LSTM_model1, bilstm_model, CNN_model, FFN, new_GRU		# Importing the models
 
 xinp=[]
 with open("filteredtext.txt","r") as file:
@@ -16,7 +15,7 @@ with open("filteredtext.txt","r") as file:
 p=len(xinp)
 print("Number of reviews:",p)
 
-# Converting texts to sequence
+# Converting texts to sequences
 tokenizer = Tokenizer()
 xinp=np.array(xinp)
 tokenizer.fit_on_texts(xinp)
@@ -24,8 +23,9 @@ X=tokenizer.texts_to_sequences(xinp)
 X = pad_sequences(X)
 #print(X[0])
 
+n2=X.shape[1]			# Input length
 vocab_size = len(tokenizer.word_counts)
-print(vocab_size)
+print(vocab_size)				# Total number of words
 
 # Output Ratings pre-processing
 y = []
@@ -38,15 +38,14 @@ encode = OneHotEncoder(sparse=False)
 Y=encode.fit_transform(np.reshape(y,(y.shape[0], 1)))
 
 # Training
-X_train = X[:60000, :]
-X_val = X[60000:80000, :]
-X_test=X[80000:100000, :]
+X_train = X[:60000, :]		# Training set length
+X_val = X[60000:80000, :]	# Validation set length
+X_test=X[80000:100000, :]	# Test set length
 Y_train= Y[:60000, :]
 Y_val= Y[60000:80000, :]
 Y_test= Y[80000:100000, :]
 
-n2=X.shape[1]			# Input length
-
+# Selecting the model to run
 # model=CNN_model(vocab_size, n2)
 # model=new_GRU((n2,),vocab_size)
 # model=bilstm_model((n2,),vocab_size)

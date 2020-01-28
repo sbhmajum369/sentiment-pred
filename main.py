@@ -5,7 +5,7 @@ from tensorflow.keras.preprocessing.sequence import pad_sequences
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.preprocessing import OneHotEncoder
-
+from Models import LSTM_model1, bilstm_model, CNN_model, FFN, new_GRU
 
 xinp=[]
 with open("filteredtext.txt","r") as file:
@@ -14,10 +14,11 @@ with open("filteredtext.txt","r") as file:
 		xinp.append(temp[0])
 
 p=len(xinp)
-xinp=np.array(xinp)
+print("Number of reviews:",p)
 
 # Converting texts to sequence
 tokenizer = Tokenizer()
+xinp=np.array(xinp)
 tokenizer.fit_on_texts(xinp)
 X=tokenizer.texts_to_sequences(xinp)
 X = pad_sequences(X)
@@ -36,28 +37,6 @@ y=np.array(y)
 encode = OneHotEncoder(sparse=False)
 Y=encode.fit_transform(np.reshape(y,(y.shape[0], 1)))
 
-# Model Architectures
-from tensorflow.keras.layers import Embedding, LSTM, Dense, Bidirectional
-from tensorflow.keras.models import Sequential
-
-def LSTM_model1():
-  model1 = Sequential()
-  model1.add(Embedding(input_dim=vocab_size, output_dim=512))
-  model1.add(LSTM(256, activation='tanh', kernel_initializer='he_uniform'))
-  model1.add(Dense(20, activation='relu', kernel_initializer='he_uniform'))
-  model1.add(Dense(5, activation='softmax'))
-  model1.compile(loss="categorical_crossentropy",optimizer='adam',metrics=['accuracy'])
-  return model1
-def bilstm_model():
-  model2 = Sequential()
-  model2.add(Embedding(input_dim=vocab_size, output_dim=384))
-  layer = LSTM(128)
-  model2.add(Bidirectional(layer))
-  model2.add(Dense(20, activation='relu', kernel_initializer='he_uniform'))
-  model2.add(Dense(5, activation='softmax'))
-  model2.compile(loss="categorical_crossentropy",optimizer='adam',metrics=['accuracy'])
-  return model2
-
 # Training
 X_train = X[:60000, :]
 X_val = X[60000:80000, :]
@@ -66,9 +45,15 @@ Y_train= Y[:60000, :]
 Y_val= Y[60000:80000, :]
 Y_test= Y[80000:100000, :]
 
-#model=LSTM_model1()
-model=bilstm_model()
-history=model.fit(X_train, Y_train, validation_data=(X_val, Y_val), batch_size=50, epochs=6, verbose=2)
+n2=X.shape[1]			# Input length
+
+# model=CNN_model(vocab_size, n2)
+# model=new_GRU((n2,),vocab_size)
+# model=bilstm_model((n2,),vocab_size)
+# model=LSTM_model1((n2,),vocab_size)
+model= FFN(vocab_size)
+
+history=model.fit(X_train, Y_train, validation_data=(X_val, Y_val), batch_size=50, epochs=3, verbose=1)
 loss, accuracy=model.evaluate(X_test, Y_test, batch_size=50)
 
 # Result Visualization

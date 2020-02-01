@@ -10,7 +10,7 @@ Afterwards run the files in the following order:
 
 2) main.py
 
-Change the training, validation and test sizes in 'main.py'
+Here, different neural architectures are designed and tested on text data. Models tested include: LSTM, biLSTM, 1-D CNN, GRU and Feed-forward network.
 
-Here, the ouput ratings range from 1 to 5.
+GRU and LSTM provided best results on this dataset.
 

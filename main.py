@@ -6,6 +6,20 @@ import matplotlib.pyplot as plt
 from sklearn.preprocessing import OneHotEncoder
 from Models import LSTM_model1, bilstm_model, CNN_model, FFN, new_GRU		# Importing the models
 
+def summarize_diagnostics(history):
+	# plot loss
+	# plt.subplot(1,2,1)
+	plt.title('Cross Entropy Loss')
+	plt.plot(history.history['loss'], color='blue', label='train')
+	plt.plot(history.history['val_loss'], color='orange', label='test')
+	plt.show()
+	# plot accuracy
+	# plt.subplot(1,2,2)
+	plt.title('Classification Accuracy')
+	plt.plot(history.history['acc'], color='blue', label='train')
+	plt.plot(history.history['val_acc'], color='orange', label='test')
+	plt.show()
+
 xinp=[]
 with open("filteredtext.txt","r") as file:
 	for value in file:
@@ -56,20 +70,6 @@ history=model.fit(X_train, Y_train, validation_data=(X_val, Y_val), batch_size=5
 loss, accuracy=model.evaluate(X_test, Y_test, batch_size=50)
 
 # Result Visualization
-def summarize_diagnostics(history):
-	# plot loss
-	# plt.subplot(1,2,1)
-	plt.title('Cross Entropy Loss')
-	plt.plot(history.history['loss'], color='blue', label='train')
-	plt.plot(history.history['val_loss'], color='orange', label='test')
-	plt.show()
-	# plot accuracy
-	# plt.subplot(1,2,2)
-	plt.title('Classification Accuracy')
-	plt.plot(history.history['acc'], color='blue', label='train')
-	plt.plot(history.history['val_acc'], color='orange', label='test')
-	plt.show()
-
 summarize_diagnostics(history)
 print("Test Accuracy:",accuracy*100,"%")
 print("Test Loss:",loss)

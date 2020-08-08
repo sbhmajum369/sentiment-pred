@@ -36,7 +36,7 @@ C) Afterwards run the files in the following order:
 1) Text-Preprocess.py: For filtering and processing the text, before feeding it to the network.
 2) main.py: For training and testing. Hyper-parameters can be changed accordingly, from inside the file.
 
-Here, different neural architectures are designed and tested on text data. Models tested include: LSTM, biLSTM, 1-D CNN, GRU and Feed-forward network.
+Here, different neural architectures are designed and tested on text data. Models tested include: LSTM, biLSTM, 1-D CNN, (GRU+RNN) and Feed-forward network.
 
-GRU and LSTM provided best result of 86%, during testing, on this dataset.
+(GRU+RNN) architecture provided best result of 86%, during testing, on this dataset.
 

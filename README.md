@@ -8,9 +8,9 @@ Currently, we have utilized the 'Reviews' dataset from Yelp, which provides real
 
 ## Steps for Training and Testing 
 
-Before we begin, first dowload the repo using: git clone https://github.com/smajum-AI/sentiment-pred.git
+Before we begin, first dowload the repo using: `git clone`
 
-A) Download the json file from: https://www.yelp.com/dataset/download.
+A) Download the json file from: [Yelp Reviews](https://www.yelp.com/dataset).
 
 From 'review.json' extract the 'text' and 'stars' in 2 separate .txt files: "Reviews.txt" and "Ratings.txt".
 
